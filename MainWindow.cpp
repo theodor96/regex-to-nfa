@@ -1,10 +1,16 @@
+#include <QLineEdit>
+#include <QLabel>
+#include <QPushButton>
+
 #include "MainWindow.h"
+#include "Canvas.h"
 
 MainWindow::MainWindow() :
     QDialog(),
     m_enterTextLabel(new QLabel(this)),
     m_textBox(new QLineEdit(this)),
-    m_computeBtn(new QPushButton(this))
+    m_computeBtn(new QPushButton(this)),
+    m_canvas()
 {
     // setup the main window
     this->setWindowTitle("RegexToNFA");
@@ -31,7 +37,8 @@ MainWindow::MainWindow() :
     // when button is clicked (so regex is implicitly valid), magic happens
     this->connect(m_computeBtn, &QPushButton::clicked, this, [=]
     {
-        this->close();
+        m_canvas = std::make_unique<Canvas>();
+        m_canvas->show();
     });
 }
 

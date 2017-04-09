@@ -11,7 +11,9 @@ greaterThan(QT_MAJOR_VERSION, 4) : QT += widgets
 TARGET = RegexToNFA
 TEMPLATE = app
 
-SOURCES += main.cpp\
-           MainWindow.cpp
+SOURCES += main.cpp \
+           MainWindow.cpp \
+           Canvas.cpp \
 
-HEADERS += MainWindow.h
+HEADERS += MainWindow.h \
+           Canvas.h
