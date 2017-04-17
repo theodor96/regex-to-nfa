@@ -7,7 +7,7 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    auto window = std::make_unique<MainWindow>();
+    auto window = new MainWindow();
     window->show();
 
     return app.exec();

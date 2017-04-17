@@ -18,7 +18,7 @@ MainWindow::MainWindow() :
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     // setup the label
-    m_enterTextLabel->setText("Enter a REGEX in the textbox below:");
+    m_enterTextLabel->setText("Enter a REGEX in the textbox:");
     m_enterTextLabel->move(10, 30);
 
     // setup the textbox
@@ -26,7 +26,7 @@ MainWindow::MainWindow() :
 
     // setup the button
     m_computeBtn->setText("Compute the NFA");
-    m_computeBtn->move(50, 100);
+    m_computeBtn->move(20, 100);
 
     // check when the regex becomes valid, activate the button
     this->connect(m_textBox, &QLineEdit::textChanged, this, [=]
@@ -37,7 +37,7 @@ MainWindow::MainWindow() :
     // when button is clicked (so regex is implicitly valid), magic happens
     this->connect(m_computeBtn, &QPushButton::clicked, this, [=]
     {
-        m_canvas = std::make_unique<Canvas>();
+        m_canvas = std::unique_ptr<Canvas>(new Canvas());
         m_canvas->show();
     });
 }
