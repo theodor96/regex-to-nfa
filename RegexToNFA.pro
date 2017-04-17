@@ -14,6 +14,8 @@ TEMPLATE = app
 SOURCES += main.cpp \
            MainWindow.cpp \
            Canvas.cpp \
+    State.cpp
 
 HEADERS += MainWindow.h \
-           Canvas.h
+           Canvas.h \
+    State.h
