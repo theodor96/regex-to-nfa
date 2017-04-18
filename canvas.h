@@ -7,14 +7,10 @@ class Canvas : public QDialog
 {
 public:
     Canvas();
-
     Canvas(const Canvas&) = delete;
     Canvas& operator=(const Canvas&) = delete;
     Canvas(Canvas&&) = delete;
     Canvas& operator=(Canvas&&) = delete;
-
-private:
-
 };
 
 #endif // CANVAS_H

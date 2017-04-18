@@ -1,31 +1,19 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include <QWidget>
 
-class State : public QWidget
+class State
 {
 public:
+    typedef State Self;
+    typedef std::unique_ptr<Self> Ptr;
+    typedef std::shared_ptr<Self> SharedPtr;
 
-    State(QWidget* parent, quint16 rx, quint16 ry);
-
-    QSize sizeHint() const override
-    {
-        return
-        {
-            500,
-            500
-        };
-    }
-
-protected:
-
-    void paintEvent(QPaintEvent* event) override;
-
-private:
-
-    quint16 m_rx;
-    quint16 m_ry;
+    State();
+    State(const State&) = delete;
+    State& operator=(const State&) = delete;
+    State(State&&) = delete;
+    State& operator=(State&&) = delete;
 };
 
 #endif // STATE_H

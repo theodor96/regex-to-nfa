@@ -1,7 +1,5 @@
 #include "Canvas.h"
-#include "State.h"
-
-#include <QPainter>
+#include "Automaton.h"
 
 Canvas::Canvas() :
     QDialog()
@@ -11,7 +9,6 @@ Canvas::Canvas() :
     this->setFixedSize(300, 300);
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
-    auto s = new State(this, 40, 40);
+    auto s = new Automaton(this);
     s->show();
-
 }
