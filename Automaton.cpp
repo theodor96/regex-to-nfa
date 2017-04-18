@@ -1,12 +1,38 @@
 #include <QPen>
 #include <QPainter>
 #include "Automaton.h"
+#include "Canvas.h"
+#include "State.h"
+
+#include <QDebug>
 
 Automaton::Automaton(Canvas* canvas) :
     QWidget(canvas),
-    m_states()
+    m_states{},
+    m_transitions{}
 {
+    auto s1 = new State(1);
+    auto s2 = new State(2);
+    auto s3 = new State(3);
 
+    m_transitions[std::make_pair(s1, 'a')] = s2;
+    m_transitions[std::make_pair(s2, 'b')] = s3;
+    m_transitions[std::make_pair(s3, 'c')] = s1;
+
+    m_states.push_back(State::Ptr(s1));
+    m_states.push_back(State::Ptr(s2));
+    m_states.push_back(State::Ptr(s3));
+
+    for (const auto& sourceItr : m_transitions)
+    {
+        qDebug() << "from state "
+                 << sourceItr.first.first->getGuid()
+                 << "with isPAinted = " << sourceItr.first.first->isPainted()
+                 << " to state "
+                 << sourceItr.second->getGuid()
+                 << " via symbol "
+                 << sourceItr.first.second;
+    }
 }
 
 QSize Automaton::sizeHint() const
@@ -18,7 +44,7 @@ QSize Automaton::sizeHint() const
     };
 }
 
-void State::paintEvent(QPaintEvent*)
+void Automaton::paintEvent(QPaintEvent*)
 {
     QPen pen;
     pen.setColor(QColor(Qt::red));
