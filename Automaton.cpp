@@ -1,5 +1,7 @@
 #include <QPen>
 #include <QPainter>
+#include <QTime>
+#include <QtMath>
 #include "Automaton.h"
 #include "Canvas.h"
 #include "State.h"
@@ -11,6 +13,8 @@ Automaton::Automaton(Canvas* canvas) :
     m_states{},
     m_transitions{}
 {
+    qsrand(static_cast<quint64>(QTime::currentTime().msecsSinceStartOfDay()));
+
     auto s1 = new State(1);
     auto s2 = new State(2);
     auto s3 = new State(3);
@@ -22,6 +26,11 @@ Automaton::Automaton(Canvas* canvas) :
     m_states.push_back(State::Ptr(s1));
     m_states.push_back(State::Ptr(s2));
     m_states.push_back(State::Ptr(s3));
+
+    for (const auto& state : m_states)
+    {
+        state->paintedAt(findNewStatePaintLocation());
+    }
 
     for (const auto& sourceItr : m_transitions)
     {
@@ -56,7 +65,7 @@ void Automaton::paintEvent(QPaintEvent*)
 
     painter.setRenderHint(QPainter::Antialiasing);
 
-    painter.drawEllipse(QPoint(40, 40), 20, 20);
+    /*painter.drawEllipse(QPoint(40, 40), 20, 20);
 
     painter.drawEllipse(QPoint(80, 80), 20, 20);
 
@@ -64,5 +73,49 @@ void Automaton::paintEvent(QPaintEvent*)
 
     painter.drawLines(QVector<QPoint>{ {40, 40}, {80, 80}, {80, 80}, {120, 190} });
 
-    painter.drawText(60, 60, "dwed");
+    painter.drawText(60, 60, "dwed");*/
+
+    for (const auto& state : m_states)
+    {
+        painter.drawEllipse(state->getPaintLocation(), 5, 5);
+    }
+}
+
+bool Automaton::isPaintLocationSuitable(const QPoint& location) const
+{
+    for (const auto& state : m_states)
+    {
+        if (!state->isPainted())
+        {
+            continue;
+        }
+
+        if (qFabs(state->getPaintLocation().manhattanLength() - location.manhattanLength()) < 10)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+QPoint Automaton::getRandomPaintLocation() const
+{
+    return
+    {
+        qrand() % 480,
+        qrand() % 480
+    };
+}
+
+QPoint Automaton::findNewStatePaintLocation() const
+{
+    QPoint result(getRandomPaintLocation());
+    while (!isPaintLocationSuitable(result))
+    {
+        qDebug() << "point " << result << " was not good";
+        result = getRandomPaintLocation();
+    }
+
+    return result;
 }

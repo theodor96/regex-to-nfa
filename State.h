@@ -22,6 +22,8 @@ public:
     const QPoint& getPaintLocation() const;
     quint32 getGuid() const;
 
+    void paintedAt(const QPoint& location);
+
 private:
     QPoint  m_paintLocation;
     quint32 m_guid;

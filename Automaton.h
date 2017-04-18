@@ -60,6 +60,10 @@ protected:
     void paintEvent(QPaintEvent* event) override;
 
 private:
+    bool isPaintLocationSuitable(const QPoint& location) const;
+    QPoint getRandomPaintLocation() const;
+    QPoint findNewStatePaintLocation() const;
+
     detail::StateList     m_states;
     detail::TransitionMap m_transitions;
 };

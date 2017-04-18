@@ -16,7 +16,13 @@ bool State::isPainted() const
 {
     return !m_paintLocation.isNull();
 }
+
 const QPoint& State::getPaintLocation() const
 {
     return m_paintLocation;
+}
+
+void State::paintedAt(const QPoint& location)
+{
+    m_paintLocation = location;
 }
