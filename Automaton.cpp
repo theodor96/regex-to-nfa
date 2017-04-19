@@ -119,3 +119,4 @@ QPoint Automaton::findNewStatePaintLocation() const
 
     return result;
 }
+

@@ -1,25 +1,20 @@
+#include <QPushButton>
 #include "Canvas.h"
-#include "Automaton.h"
 
-Canvas::Canvas(MainWindow* parent) :
+Canvas::Canvas() :
     QDialog(),
-    m_closeBtn(new)
+    m_closeBtn(new QPushButton(this))
 {
     // setup the canvas
     this->setWindowTitle("NFA Computation Result");
     this->setFixedSize(300, 300);
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    
+    // setup the close button
+    m_computeBtn->setText("Close ");
+    m_computeBtn->move(100, 270);
 
-    auto nfa
-
-
-    this->connect(m_closeBtn)
-    auto s = new Automaton(this);
-    s->show();
+    // close the canvas on close button push
+    this->connect(m_closeBtn, &QPushButton::clicked, this, &QWidget::close);
 }
 
-void Canvas::closeEvent(QCloseEvent* event)
-{
-    parent->onCanvasClosed();
-    event->accept();
-}

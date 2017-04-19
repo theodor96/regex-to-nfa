@@ -26,3 +26,4 @@ void State::paintedAt(const QPoint& location)
 {
     m_paintLocation = location;
 }
+

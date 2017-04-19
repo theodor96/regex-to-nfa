@@ -12,14 +12,12 @@ class QPushButton;
 class MainWindow : public QDialog
 {
 public:
-    MainWindow();
-
     using Self   = MainWindow;
     using Ptr    = Utils::Ptr<Self>;
-    using NewPtr = Utils::NewPtr<Self>;
-
-
-    NO_COPY_NO_MOVE(MainWindow)
+    using Shared = Utils::SharedPtr<Self>;
+    
+    MainWindow();
+    NO_COPY_NO_MOVE(MainWindow);
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -30,7 +28,8 @@ private:
     QLabel*      m_enterText;
     QLineEdit*   m_textBox;
     QPushButton* m_computeBtn;
-    //Canvas::Ptr  m_canvas;
+    Canvas::Ptr  m_canvas;
 };
 
 #endif // MAINWINDOW_H
+

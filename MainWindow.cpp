@@ -22,20 +22,20 @@ MainWindow::MainWindow() :
     // setup the textbox
     m_textBox->setGeometry(10, 60, 180, 20);
 
-    // setup the button
+    // setup the compute button
     m_computeBtn->setText("Compute the NFA");
     m_computeBtn->move(20, 100);
 
-    // check when the regex becomes valid, activate the button
+    // check when the regex becomes valid, activate the compute button
     this->connect(m_textBox, &QLineEdit::textChanged, this, [=]
     {
         m_computeBtn->setEnabled(isRegexValid());
     });
 
-    // when button is clicked (so regex is implicitly valid), magic happens
+    // when compute button is clicked (so regex is implicitly valid), magic happens
     this->connect(m_computeBtn, &QPushButton::clicked, this, [=]
     {
-        m_canvas = Canvas::NewPtr(this);
+        m_canvas = Canvas::Ptr(new Canvas(this));
         m_canvas->show();
     });
 }
@@ -78,3 +78,4 @@ bool MainWindow::isRegexValid()
 
     return true;
 }
+

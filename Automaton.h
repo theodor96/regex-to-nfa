@@ -69,3 +69,4 @@ private:
 };
 
 #endif // AUTOMATON_H
+
