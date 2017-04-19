@@ -2,6 +2,7 @@
 #define CANVAS_H
 
 #include <QDialog>
+#include "AutomatonWidget.h"
 #include "Utils.h"
 
 class QPushButton;
@@ -17,7 +18,8 @@ public:
     NO_COPY_NO_MOVE(Canvas);
     
 private:
-    QPushButton* m_closeBtn;
+    QPushButton*         m_closeBtn;
+    AutomatonWidget::Ptr m_automaton;
 };
 
 #endif // CANVAS_H
