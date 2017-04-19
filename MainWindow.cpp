@@ -2,6 +2,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include "MainWindow.h"
+#include "NFA.h"
 
 MainWindow::MainWindow() :
     QDialog(),
@@ -35,7 +36,7 @@ MainWindow::MainWindow() :
     // when compute button is clicked (so regex is implicitly valid), magic happens
     this->connect(m_computeBtn, &QPushButton::clicked, this, [=]
     {
-        m_canvas = Canvas::Ptr(new Canvas(this));
+        m_canvas = Canvas::Ptr(new Canvas(NFA::FromRegex(m_textBox->text())));
         m_canvas->show();
     });
 }
