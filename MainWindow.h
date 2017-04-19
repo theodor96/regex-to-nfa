@@ -2,32 +2,35 @@
 #define MAINWINDOW_H
 
 #include <QDialog>
-#include <memory>
+#include "Canvas.h"
+#include "Utils.h"
 
 class QLabel;
 class QLineEdit;
 class QPushButton;
-
-class Canvas;
 
 class MainWindow : public QDialog
 {
 public:
     MainWindow();
 
-    MainWindow(const MainWindow&) = delete;
-    MainWindow& operator=(const MainWindow&) = delete;
-    MainWindow(MainWindow&&) = delete;
-    MainWindow& operator=(MainWindow&&) = delete;
+    using Self   = MainWindow;
+    using Ptr    = Utils::Ptr<Self>;
+    using NewPtr = Utils::NewPtr<Self>;
+
+
+    NO_COPY_NO_MOVE(MainWindow)
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
 
 private:
     bool isRegexValid();
 
-    QLabel*      m_enterTextLabel;
+    QLabel*      m_enterText;
     QLineEdit*   m_textBox;
     QPushButton* m_computeBtn;
-
-    std::unique_ptr<Canvas> m_canvas;
+    //Canvas::Ptr  m_canvas;
 };
 
 #endif // MAINWINDOW_H

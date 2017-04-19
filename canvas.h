@@ -7,10 +7,10 @@ class Canvas : public QDialog
 {
 public:
     Canvas();
-    Canvas(const Canvas&) = delete;
-    Canvas& operator=(const Canvas&) = delete;
-    Canvas(Canvas&&) = delete;
-    Canvas& operator=(Canvas&&) = delete;
+    //NO_COPY_NO_MOVE(Canvas)
+
+protected:
+    void closeEvent(QCloseEvent* event) override;
 };
 
 #endif // CANVAS_H

@@ -1,13 +1,11 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QPushButton>
-
 #include "MainWindow.h"
-#include "Canvas.h"
 
 MainWindow::MainWindow() :
     QDialog(),
-    m_enterTextLabel(new QLabel(this)),
+    m_enterText(new QLabel(this)),
     m_textBox(new QLineEdit(this)),
     m_computeBtn(new QPushButton(this)),
     m_canvas()
@@ -37,9 +35,19 @@ MainWindow::MainWindow() :
     // when button is clicked (so regex is implicitly valid), magic happens
     this->connect(m_computeBtn, &QPushButton::clicked, this, [=]
     {
-        m_canvas = std::unique_ptr<Canvas>(new Canvas());
+        m_canvas = Canvas::NewPtr(this);
         m_canvas->show();
     });
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+    if (m_canvas)
+    {
+        m_canvas->close();
+    }
+
+    event->accept();
 }
 
 bool MainWindow::isRegexValid()

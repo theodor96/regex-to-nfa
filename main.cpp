@@ -1,13 +1,11 @@
 #include <QApplication>
-#include <memory>
-
 #include "MainWindow.h"
 
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
 
-    auto window = new MainWindow();
+    auto window = MainWindow::NewPtr{}();
     window->show();
 
     return app.exec();

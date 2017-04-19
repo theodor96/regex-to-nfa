@@ -23,3 +23,4 @@ HEADERS += MainWindow.h \
            Canvas.h \
            Automaton.h \
            State.h \
+    utils.h
