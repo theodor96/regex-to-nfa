@@ -1,6 +1,7 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QPushButton>
+#include <QCloseEvent>
 #include "MainWindow.h"
 #include "NFA.h"
 
@@ -17,8 +18,8 @@ MainWindow::MainWindow() :
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     // setup the label
-    m_enterTextLabel->setText("Enter a REGEX in the textbox:");
-    m_enterTextLabel->move(10, 30);
+    m_enterText->setText("Enter a REGEX in the textbox:");
+    m_enterText->move(10, 30);
 
     // setup the textbox
     m_textBox->setGeometry(10, 60, 180, 20);
@@ -36,7 +37,7 @@ MainWindow::MainWindow() :
     // when compute button is clicked (so regex is implicitly valid), magic happens
     this->connect(m_computeBtn, &QPushButton::clicked, this, [=]
     {
-        m_canvas = Canvas::Ptr(new Canvas(NFA::FromRegex(m_textBox->text())));
+        m_canvas = Canvas::Ptr(new Canvas(NFA::FromRegex(m_textBox->text().toStdString())));
         m_canvas->show();
     });
 }
@@ -57,7 +58,7 @@ bool MainWindow::isRegexValid()
     // and does not take into account the actual validity
     // of the string as a regex, but it's good to prevent mistakes
 
-    static QString C_ACCEPTED_CHARACTERS("()+*");
+    static QString C_ACCEPTED_CHARACTERS("|()+*.");
 
     for (const auto& itr : m_textBox->text())
     {
@@ -79,4 +80,3 @@ bool MainWindow::isRegexValid()
 
     return true;
 }
-

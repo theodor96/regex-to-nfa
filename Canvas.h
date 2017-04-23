@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "AutomatonWidget.h"
+#include "NFA.h"
 #include "Utils.h"
 
 class QPushButton;
@@ -14,12 +15,15 @@ public:
     using Ptr    = Utils::Ptr<Self>;
     using Shared = Utils::SharedPtr<Self>;
     
-    Canvas();
+    Canvas(const NFA&);
     NO_COPY_NO_MOVE(Canvas);
     
 private:
     QPushButton*         m_closeBtn;
     AutomatonWidget::Ptr m_automaton;
+
+    void setupStates(const NFA::StateList& stateList, NFA::State finalState) const;
+    void setupTransitions(const NFA::TransitionList& transitionList) const;
 };
 
 #endif // CANVAS_H

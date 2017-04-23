@@ -1,122 +1,54 @@
-#include <QPen>
-#include <QPainter>
-#include <QTime>
-#include <QtMath>
-#include "Automaton.h"
+#include "AutomatonWidget.h"
 #include "Canvas.h"
-#include "State.h"
 
-#include <QDebug>
-
-Automaton::Automaton(Canvas* canvas) :
+AutomatonWidget::AutomatonWidget(Canvas* canvas) :
     QWidget(canvas),
-    m_states{},
-    m_transitions{}
+    m_stateList(),
+    m_transitionList()
 {
-    qsrand(static_cast<quint64>(QTime::currentTime().msecsSinceStartOfDay()));
 
-    auto s1 = new State(1);
-    auto s2 = new State(2);
-    auto s3 = new State(3);
-
-    m_transitions[std::make_pair(s1, 'a')] = s2;
-    m_transitions[std::make_pair(s2, 'b')] = s3;
-    m_transitions[std::make_pair(s3, 'c')] = s1;
-
-    m_states.push_back(State::Ptr(s1));
-    m_states.push_back(State::Ptr(s2));
-    m_states.push_back(State::Ptr(s3));
-
-    for (const auto& state : m_states)
-    {
-        state->paintedAt(findNewStatePaintLocation());
-    }
-
-    for (const auto& sourceItr : m_transitions)
-    {
-        qDebug() << "from state "
-                 << sourceItr.first.first->getGuid()
-                 << "with isPAinted = " << sourceItr.first.first->isPainted()
-                 << " to state "
-                 << sourceItr.second->getGuid()
-                 << " via symbol "
-                 << sourceItr.first.second;
-    }
 }
 
-QSize Automaton::sizeHint() const
+void AutomatonWidget::addState(StateWidget::Ptr state)
+{
+    m_stateList.push_back(std::move(state));
+    this->update();
+}
+
+void AutomatonWidget::addTransition(TransitionWidget::Ptr transition)
+{
+    m_transitionList.push_back(std::move(transition));
+    this->update();
+}
+
+const AutomatonWidget::StateList& AutomatonWidget::getStateList() const
+{
+    return m_stateList;
+}
+
+const AutomatonWidget::TransitionList& AutomatonWidget::getTransitionList() const
+{
+    return m_transitionList;
+}
+
+QSize AutomatonWidget::sizeHint() const
 {
     return
     {
-        500,
-        500
+        530,
+        530
     };
 }
 
-void Automaton::paintEvent(QPaintEvent*)
+void AutomatonWidget::paintEvent(QPaintEvent*)
 {
-    QPen pen;
-    pen.setColor(QColor(Qt::red));
-    pen.setWidth(1);
-
-    QPainter painter(this);
-
-    painter.setPen(pen);
-
-    painter.setRenderHint(QPainter::Antialiasing);
-
-    /*painter.drawEllipse(QPoint(40, 40), 20, 20);
-
-    painter.drawEllipse(QPoint(80, 80), 20, 20);
-
-    painter.drawEllipse(QPoint(120, 190), 20, 20);
-
-    painter.drawLines(QVector<QPoint>{ {40, 40}, {80, 80}, {80, 80}, {120, 190} });
-
-    painter.drawText(60, 60, "dwed");*/
-
-    for (const auto& state : m_states)
+    for (const auto& stateItr : m_stateList)
     {
-        painter.drawEllipse(state->getPaintLocation(), 5, 5);
-    }
-}
-
-bool Automaton::isPaintLocationSuitable(const QPoint& location) const
-{
-    for (const auto& state : m_states)
-    {
-        if (!state->isPainted())
-        {
-            continue;
-        }
-
-        if (qFabs(state->getPaintLocation().manhattanLength() - location.manhattanLength()) < 10)
-        {
-            return false;
-        }
+        stateItr->update();
     }
 
-    return true;
-}
-
-QPoint Automaton::getRandomPaintLocation() const
-{
-    return
+    for (const auto& transitionItr : m_transitionList)
     {
-        qrand() % 480,
-        qrand() % 480
-    };
-}
-
-QPoint Automaton::findNewStatePaintLocation() const
-{
-    QPoint result(getRandomPaintLocation());
-    while (!isPaintLocationSuitable(result))
-    {
-        qDebug() << "point " << result << " was not good";
-        result = getRandomPaintLocation();
+        transitionItr->update();
     }
-
-    return result;
 }
-

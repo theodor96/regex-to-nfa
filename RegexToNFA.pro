@@ -16,11 +16,15 @@ CONFIG += console
 SOURCES += main.cpp \
            MainWindow.cpp \
            Canvas.cpp \
-           Automaton.cpp \
-           State.cpp \
+           AutomatonWidget.cpp \
+           StateWidget.cpp \
+           TransitionWidget.cpp \
+           NFA.cpp \
 
 HEADERS += MainWindow.h \
            Canvas.h \
-           Automaton.h \
-           State.h \
-    	     Utils.h \
+           AutomatonWidget.h \
+           StateWidget.h \
+           TransitionWidget.h \
+           NFA.h \
+           Utils.h \

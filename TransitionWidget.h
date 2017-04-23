@@ -1,24 +1,30 @@
-#ifndef CANVAS_H
-#define CANVAS_H
+#ifndef TRANSITIONWIDGET_H
+#define TRANSITIONWIDGET_H
 
-#include <QDialog>
+#include <QWidget>
+#include <QSize>
 #include "Utils.h"
 
-class QPushButton;
+class AutomatonWidget;
+class QPaintEvent;
 
-class Canvas : public QDialog
+class TransitionWidget : public QWidget
 {
 public:
-    using Self   = Canvas;
+    using Self   = TransitionWidget;
     using Ptr    = Utils::Ptr<Self>;
     using Shared = Utils::SharedPtr<Self>;
-    
-    Canvas();
-    NO_COPY_NO_MOVE(Canvas);
-    
+
+    TransitionWidget(AutomatonWidget* parent);
+    NO_COPY_NO_MOVE(TransitionWidget);
+
+    QSize sizeHint() const override;
+
+protected:
+    void paintEvent(QPaintEvent* event) override;
+
 private:
-    QPushButton* m_closeBtn;
+
 };
 
-#endif // CANVAS_H
-
+#endif // TRANSITIONWIDGET_H

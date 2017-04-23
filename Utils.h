@@ -28,7 +28,18 @@ namespace Utils
     {
         return SmartT::Ptr(new SmartT(std::forward<Args>(args)...));
     }
+
+    template<typename IntT>
+    IntT getRandomBetween(IntT lo, IntT hi)
+    {
+        return qrand() % (hi - lo + 1) + lo;
+    }
+
+    template<class PointT>
+    double DistanceBetweenPoints(const PointT& lhs, const PointT& rhs)
+    {
+        return qSqrt(qPow(lhs.x() - rhs.x(), 2) + qPow(lhs.y() - rhs.y(), 2));
+    }
 }
 
 #endif // UTILS_H
-

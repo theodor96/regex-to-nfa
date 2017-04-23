@@ -1,30 +1,45 @@
-#ifndef STATE_H
-#define STATE_H
+#ifndef STATEWIDGET_H
+#define STATEWIDGET_H
 
-#include <QtGlobal>
+#include <QWidget>
+#include <QSize>
 #include <QPoint>
+#include <QtGlobal>
 #include "Utils.h"
 
-class State
+class AutomatonWidget;
+class QPaintEvent;
+
+class StateWidget : public QWidget
 {
 public:
-    using Self   = State;
+    using Self   = StateWidget;
     using Ptr    = Utils::Ptr<Self>;
     using Shared = Utils::SharedPtr<Self>;
     
-    State();
-    NO_COPY_NO_MOVE(State);
+    StateWidget(AutomatonWidget* parent);
+    NO_COPY_NO_MOVE(StateWidget);
 
-    bool isPainted() const;
-    const QPoint& getPaintLocation() const;
-    quint32 getGuid() const;
+    using Guid = qint64;
+    static const Guid InvalidGuid = -1;
 
-    void paintedAt(const QPoint& location);
+    const QPoint& getLocation() const;
+    Guid getGuid() const;
+    bool isFinal() const;
+
+    void setGuid(Guid guid);
+    void setLocation(const QPoint& location);
+    void markAsFinal();
+
+    QSize sizeHint() const override;
+
+protected:
+    void paintEvent(QPaintEvent* event) override;
 
 private:
-    QPoint  m_paintLocation;
-    quint32 m_guid;
+    QPoint  m_location;
+    Guid    m_guid;
+    bool    m_isFinal;
 };
 
-#endif // STATE_H
-
+#endif // STATEWIDGET_H
