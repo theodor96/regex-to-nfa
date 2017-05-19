@@ -19,11 +19,11 @@ Canvas::Canvas(const NFA& nfa) :
     
     // setup the close button
     m_closeBtn->setText("Close");
-    m_closeBtn->move(220, 540);
+    m_closeBtn->move(460, 540);
 
     // setup the refresh button
-    m_closeBtn->setText("Refresh");
-    m_closeBtn->move(120, 540);
+    m_refreshBtn->setText("Refresh");
+    m_refreshBtn->move(360, 540);
 
     // close the canvas on close button push
     this->connect(m_closeBtn, &QPushButton::clicked, this, &QWidget::close);

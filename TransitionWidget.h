@@ -7,7 +7,6 @@
 #include "Utils.h"
 
 class AutomatonWidget;
-class StateWidget;
 class QPaintEvent;
 
 class TransitionWidget : public QWidget
@@ -38,9 +37,11 @@ protected:
     void paintEvent(QPaintEvent* event) override;
 
 private:
+    AutomatonWidget*         m_automaton;
     StateWidget::ConstShared m_from;
     StateWidget::ConstShared m_to;
-    Symbol m_symbol;
+    Symbol                   m_symbol;
+    QPoint                   m_bezierPoint;
 };
 
 #endif // TRANSITIONWIDGET_H

@@ -39,9 +39,9 @@ protected:
     void paintEvent(QPaintEvent* event) override;
 
 private:
-    QPoint  m_location;
-    Guid    m_guid;
-    bool    m_isFinal;
+    QPoint m_location;
+    Guid   m_guid;
+    bool   m_isFinal;
 };
 
 #endif // STATEWIDGET_H

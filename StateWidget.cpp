@@ -56,18 +56,12 @@ QSize StateWidget::sizeHint() const
 
 void StateWidget::paintEvent(QPaintEvent*)
 {
-    if (m_location.isNull())
-    {
-        return;
-    }
-
     QPen pen;
     pen.setColor(Qt::red);
     pen.setWidth(2);
 
     QPainter painter(this);
     painter.setPen(pen);
-
     painter.drawText(m_location, QString::number(m_guid));
 
     QPoint ellipseLocation;
@@ -95,5 +89,6 @@ void StateWidget::paintEvent(QPaintEvent*)
         painter.setPen(pen);
     }
 
-    painter.drawEllipse(ellipseLocation, m_guid < 10 ? 14 : m_guid < 100 ? 17 : m_guid < 1000 ? 20 : 23, 14); // x-wise radius should be dynamic depending on the width of the guid
+    // x-wise radius should be dynamic depending on the width of the guid
+    painter.drawEllipse(ellipseLocation, m_guid < 10 ? 14 : m_guid < 100 ? 17 : m_guid < 1000 ? 20 : 23, 14);
 }

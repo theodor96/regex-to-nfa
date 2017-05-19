@@ -6,7 +6,11 @@
 
 TransitionWidget::TransitionWidget(AutomatonWidget* parent) :
     QWidget(parent),
-    m_parent(parent)
+    m_automaton(parent),
+    m_from(),
+    m_to(),
+    m_symbol(),
+    m_bezierPoint()
 {
 
 }
@@ -52,30 +56,26 @@ QSize TransitionWidget::sizeHint() const
 
 void TransitionWidget::paintEvent(QPaintEvent*)
 {
-    static bool alreadyPainted = false;
-
-    if (!alreadyPainted || m_parent.lock()->isUpdateNeeded())
+    if (m_automaton->isUpdateNeeded() || m_bezierPoint.isNull())
     {
-        alreadyPainted = true;
-
-        QPoint rangePoint(30, 30);
+        QPoint rangePoint(25, 25);
         QPoint middlePoint(Utils::getMiddlePointBetween(m_from->getLocation(), m_to->getLocation()));
-        QPoint bezierPoint(Utils::getRandomPointBetween(middlePoint - rangePoint, middlePoint + rangePoint));
-
-        QPainterPath bezierCurve;
-        bezierCurve.moveTo(m_from->getLocation());
-        bezierCurve.quadTo(bezierPoint, m_to->getLocation());
-
-        QPen pen;
-        pen.setColor(Qt::green);
-        pen.setWidth(2);
-
-        QPainter painter(this);
-        painter.setPen(pen);
-        painter.drawPath(bezierCurve);
-
-        pen.setColor(Qt::black);
-        painter.setPen(pen);
-        painter.drawText(bezierPoint, m_symbol);
+        m_bezierPoint = QPoint(Utils::getRandomPointBetween(middlePoint - rangePoint, middlePoint + rangePoint));
     }
+
+    QPainterPath bezierCurve;
+    bezierCurve.moveTo(m_from->getLocation());
+    bezierCurve.quadTo(m_bezierPoint, m_to->getLocation());
+
+    QPen pen;
+    pen.setColor(Qt::green);
+    pen.setWidth(2);
+
+    QPainter painter(this);
+    painter.setPen(pen);
+    painter.drawPath(bezierCurve);
+
+    pen.setColor(Qt::black);
+    painter.setPen(pen);
+    painter.drawText(m_bezierPoint, m_symbol);
 }

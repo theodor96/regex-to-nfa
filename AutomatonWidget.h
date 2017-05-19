@@ -15,6 +15,7 @@ class AutomatonWidget : public QWidget
 public:
     using Self        = AutomatonWidget;
     using Ptr         = Utils::Ptr<Self>;
+    using Weak        = Utils::WeakPtr<Self>;
     using Shared      = Utils::SharedPtr<Self>;
     using ConstPtr    = Utils::Ptr<const Self>;
     using ConstShared = Utils::SharedPtr<const Self>;
