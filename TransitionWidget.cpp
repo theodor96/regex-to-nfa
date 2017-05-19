@@ -5,7 +5,8 @@
 #include "AutomatonWidget.h"
 
 TransitionWidget::TransitionWidget(AutomatonWidget* parent) :
-    QWidget(parent)
+    QWidget(parent),
+    m_parent(parent)
 {
 
 }
@@ -51,9 +52,11 @@ QSize TransitionWidget::sizeHint() const
 
 void TransitionWidget::paintEvent(QPaintEvent*)
 {
-    //if (!m_hasBeenPainted)
+    static bool alreadyPainted = false;
+
+    if (!alreadyPainted || m_parent.lock()->isUpdateNeeded())
     {
-       // m_hasBeenPainted = true;
+        alreadyPainted = true;
 
         QPoint rangePoint(30, 30);
         QPoint middlePoint(Utils::getMiddlePointBetween(m_from->getLocation(), m_to->getLocation()));

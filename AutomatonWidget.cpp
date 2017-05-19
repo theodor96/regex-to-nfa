@@ -3,6 +3,7 @@
 
 AutomatonWidget::AutomatonWidget(Canvas* canvas) :
     QWidget(canvas),
+    m_isUpdateNeeded(false),
     m_stateList(),
     m_transitionList()
 {
@@ -17,6 +18,11 @@ void AutomatonWidget::addState(StateWidget::Ptr state)
 void AutomatonWidget::addTransition(TransitionWidget::Ptr transition)
 {
     m_transitionList.push_back(std::move(transition));
+}
+
+bool AutomatonWidget::isUpdateNeeded() const
+{
+    return m_isUpdateNeeded;
 }
 
 const AutomatonWidget::StateList& AutomatonWidget::getStateList() const
@@ -36,4 +42,21 @@ QSize AutomatonWidget::sizeHint() const
         530,
         530
     };
+}
+
+void AutomatonWidget::refresh()
+{
+    m_isUpdateNeeded = true;
+
+    for (const auto& stateItr : m_stateList)
+    {
+        stateItr->repaint();
+    }
+
+    for (const auto& transitionItr : m_transitionList)
+    {
+        transitionItr->repaint();
+    }
+
+    m_isUpdateNeeded = false;
 }

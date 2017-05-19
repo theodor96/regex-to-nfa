@@ -25,15 +25,18 @@ public:
     using StateList      = std::vector<StateWidget::Shared>;
     using TransitionList = std::vector<TransitionWidget::Shared>;
 
+    void refresh();
     void addState(StateWidget::Ptr state);
     void addTransition(TransitionWidget::Ptr transition);
 
+    bool isUpdateNeeded() const;
     const StateList& getStateList() const;
     const TransitionList& getTransitionList() const;
 
-    //QSize sizeHint() const override;
+    QSize sizeHint() const override;
 
 private:
+    bool           m_isUpdateNeeded;
     StateList      m_stateList;
     TransitionList m_transitionList;
 };

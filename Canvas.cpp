@@ -9,6 +9,7 @@
 Canvas::Canvas(const NFA& nfa) :
     QDialog(),
     m_closeBtn(new QPushButton(this)),
+    m_refreshBtn(new QPushButton(this)),
     m_automaton(new AutomatonWidget(this))
 {
     // setup the canvas
@@ -17,11 +18,21 @@ Canvas::Canvas(const NFA& nfa) :
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     
     // setup the close button
-    m_closeBtn->setText("Close ");
+    m_closeBtn->setText("Close");
     m_closeBtn->move(220, 540);
+
+    // setup the refresh button
+    m_closeBtn->setText("Refresh");
+    m_closeBtn->move(120, 540);
 
     // close the canvas on close button push
     this->connect(m_closeBtn, &QPushButton::clicked, this, &QWidget::close);
+
+    // refresh the canvas on refresh btn push
+    this->connect(m_refreshBtn, &QPushButton::clicked, [this]
+    {
+        m_automaton->refresh();
+    });
 
     // setup the automaton widget
     setupStates(nfa.getStateList(), nfa.getFinalState());

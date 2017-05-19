@@ -22,6 +22,7 @@ public:
     
 private:
     QPushButton*         m_closeBtn;
+    QPushButton*         m_refreshBtn;
     AutomatonWidget::Ptr m_automaton;
 
     void setupStates(const NFA::StateList& stateList, NFA::State finalState) const;
@@ -29,4 +30,3 @@ private:
 };
 
 #endif // CANVAS_H
-
