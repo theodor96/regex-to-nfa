@@ -2,6 +2,7 @@
 #define UTILS_H
 
 #include <memory>
+#include <cmath>
 
 #define NO_COPY(CLASS) \
     CLASS(const CLASS&) = delete; \
@@ -35,10 +36,22 @@ namespace Utils
         return qrand() % (hi - lo + 1) + lo;
     }
 
+    template<typename PointT>
+    PointT getRandomPointBetween(PointT lo, PointT hi)
+    {
+        return PointT(getRandomBetween(lo.x(), hi.x()), getRandomBetween(lo.y(), hi.y()));
+    }
+
+    template<typename PointT>
+    PointT getMiddlePointBetween(PointT lhs, PointT rhs)
+    {
+        return PointT((lhs.x() + rhs.x()) / 2, (lhs.y() + rhs.y()) / 2);
+    }
+
     template<class PointT>
     double DistanceBetweenPoints(const PointT& lhs, const PointT& rhs)
     {
-        return qSqrt(qPow(lhs.x() - rhs.x(), 2) + qPow(lhs.y() - rhs.y(), 2));
+        return std::hypot(lhs.x() - rhs.x(), lhs.y() - rhs.y());
     }
 }
 

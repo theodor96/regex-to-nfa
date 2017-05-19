@@ -3,6 +3,8 @@
 #include "StateWidget.h"
 #include "AutomatonWidget.h"
 
+#include <QDebug>
+
 StateWidget::StateWidget(AutomatonWidget* parent) :
     QWidget(parent),
     m_location(),
@@ -39,6 +41,7 @@ void StateWidget::setLocation(const QPoint& location)
 
 void StateWidget::markAsFinal()
 {
+    qDebug() << "state " << m_guid << " has just been marked as final";
     m_isFinal = true;
 }
 
@@ -89,6 +92,7 @@ void StateWidget::paintEvent(QPaintEvent*)
     if (m_isFinal)
     {
         pen.setWidth(4);
+        painter.setPen(pen);
     }
 
     painter.drawEllipse(ellipseLocation, m_guid < 10 ? 14 : m_guid < 100 ? 17 : m_guid < 1000 ? 20 : 23, 14); // x-wise radius should be dynamic depending on the width of the guid

@@ -4,6 +4,8 @@
 #include "StateWidget.h"
 #include "TransitionWidget.h"
 
+#include <QDebug>
+
 Canvas::Canvas(const NFA& nfa) :
     QDialog(),
     m_closeBtn(new QPushButton(this)),
@@ -28,15 +30,14 @@ Canvas::Canvas(const NFA& nfa) :
 
 void Canvas::setupStates(const NFA::StateList& stateList, NFA::State finalState) const
 {
-    QPoint location(30, 30);
-    std::vector<QPoint> locationList;
+    QPoint proposedLocation(30, 30);
 
-    // checks if current location would be a good one
-    auto isSuitable = [&locationList, &location]
+    // checks if current proposed location would be a good one
+    auto isSuitable = [this, &proposedLocation]
     {
-        for (const auto& itr : locationList)
+        for (const auto& state :  m_automaton->getStateList())
         {
-            if (Utils::DistanceBetweenPoints(itr, location) < 70)
+            if (Utils::DistanceBetweenPoints(state->getLocation(), proposedLocation) < 70)
             {
                 return false;
             }
@@ -46,22 +47,22 @@ void Canvas::setupStates(const NFA::StateList& stateList, NFA::State finalState)
     };
 
     // proposes a new location for a state
-    auto findNew = [&location]
+    auto findNew = [&proposedLocation]
     {
-        location = QPoint(Utils::getRandomBetween(40, 480),
-                          Utils::getRandomBetween(40, 480));
+        proposedLocation = QPoint(Utils::getRandomBetween(40, 480),
+                                  Utils::getRandomBetween(40, 480));
     };
 
     // iterate through the list of states and create widgets for them
     // then add the widget to the automaton
     for (auto itr : stateList)
     {
-        auto state = StateWidget::Ptr(new StateWidget(m_automaton.get()));
-        state->setGuid(itr + 1);
+        auto stateWidget = StateWidget::Ptr(new StateWidget(m_automaton.get()));
+        stateWidget->setGuid(itr + 1);
 
         if (itr == finalState)
         {
-            state->markAsFinal();
+            stateWidget->markAsFinal();
         }
 
         while (!isSuitable())
@@ -69,14 +70,42 @@ void Canvas::setupStates(const NFA::StateList& stateList, NFA::State finalState)
             findNew();
         }
 
-        locationList.push_back(location);
-        state->setLocation(location);
-
-        m_automaton->addState(std::move(state));
+        stateWidget->setLocation(proposedLocation);
+        m_automaton->addState(std::move(stateWidget));
     }
 }
 
 void Canvas::setupTransitions(const NFA::TransitionList& transitionList) const
 {
-    // todo
+    using TransitionEndpoints = std::pair<StateWidget::ConstShared, StateWidget::ConstShared>;
+
+    auto findTransitionEndpoints = [this](NFA::State from, NFA::State to) -> TransitionEndpoints
+    {
+        TransitionEndpoints fromTo;
+        for (const auto& state : m_automaton->getStateList())
+        {
+            if (state->getGuid() == from + 1)
+            {
+                fromTo.first = state;
+            }
+            else if (state->getGuid() == to + 1)
+            {
+                fromTo.second = state;
+            }
+        }
+
+        return fromTo;
+    };
+
+    for (const auto& transition : transitionList)
+    {
+        auto fromTo = findTransitionEndpoints(transition.vertex_from, transition.vertex_to);
+        auto transitionWidget = TransitionWidget::Ptr(new TransitionWidget(m_automaton.get()));
+
+        transitionWidget->setFrom(fromTo.first);
+        transitionWidget->setTo(fromTo.second);
+        transitionWidget->setSymbol(transition.trans_symbol);
+
+        m_automaton->addTransition(std::move(transitionWidget));
+    }
 }

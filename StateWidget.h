@@ -13,9 +13,11 @@ class QPaintEvent;
 class StateWidget : public QWidget
 {
 public:
-    using Self   = StateWidget;
-    using Ptr    = Utils::Ptr<Self>;
-    using Shared = Utils::SharedPtr<Self>;
+    using Self        = StateWidget;
+    using Ptr         = Utils::Ptr<Self>;
+    using Shared      = Utils::SharedPtr<Self>;
+    using ConstPtr    = Utils::Ptr<const Self>;
+    using ConstShared = Utils::SharedPtr<const Self>;
     
     StateWidget(AutomatonWidget* parent);
     NO_COPY_NO_MOVE(StateWidget);
