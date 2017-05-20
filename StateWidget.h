@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QSize>
 #include <QPoint>
-#include <QtGlobal>
 #include "Utils.h"
 
 class AutomatonWidget;

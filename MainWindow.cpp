@@ -37,7 +37,7 @@ MainWindow::MainWindow() :
     // when compute button is clicked (so regex is implicitly valid), magic happens
     this->connect(m_computeBtn, &QPushButton::clicked, this, [=]
     {
-        m_canvas = Canvas::Ptr(new Canvas(NFA::FromRegex(m_textBox->text().toStdString())));
+        m_canvas = Canvas::MakePtr(NFA::FromRegex(m_textBox->text().toStdString()));
         m_canvas->show();
     });
 }

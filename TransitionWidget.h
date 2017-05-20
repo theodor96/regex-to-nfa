@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QSize>
+#include <QtGlobal>
 #include <array>
 #include "StateWidget.h"
 #include "Utils.h"

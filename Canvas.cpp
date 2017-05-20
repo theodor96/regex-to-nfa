@@ -1,10 +1,7 @@
 #include <QPushButton>
-#include <QtMath>
 #include "Canvas.h"
 #include "StateWidget.h"
 #include "TransitionWidget.h"
-
-#include <QDebug>
 
 Canvas::Canvas(const NFA& nfa) :
     QDialog(),
@@ -68,7 +65,7 @@ void Canvas::setupStates(const NFA::StateList& stateList, NFA::State finalState)
     // then add the widget to the automaton
     for (auto itr : stateList)
     {
-        auto stateWidget = StateWidget::Ptr(new StateWidget(m_automaton.get()));
+        auto stateWidget = StateWidget::MakePtr(m_automaton.get());
         stateWidget->setGuid(itr + 1);
 
         if (itr == finalState)
@@ -111,7 +108,7 @@ void Canvas::setupTransitions(const NFA::TransitionList& transitionList) const
     for (const auto& transition : transitionList)
     {
         auto fromTo = findTransitionEndpoints(transition.vertex_from, transition.vertex_to);
-        auto transitionWidget = TransitionWidget::Ptr(new TransitionWidget(m_automaton.get()));
+        auto transitionWidget = TransitionWidget::MakePtr(m_automaton.get());
 
         transitionWidget->setFrom(fromTo.first);
         transitionWidget->setTo(fromTo.second);
