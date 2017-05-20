@@ -115,7 +115,7 @@ void Canvas::setupTransitions(const NFA::TransitionList& transitionList) const
 
         transitionWidget->setFrom(fromTo.first);
         transitionWidget->setTo(fromTo.second);
-        transitionWidget->setSymbol(transition.trans_symbol);
+        transitionWidget->setSymbol(transition.trans_symbol == '^' ? '*' : transition.trans_symbol);
 
         m_automaton->addTransition(std::move(transitionWidget));
     }
