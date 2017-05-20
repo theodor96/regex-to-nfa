@@ -11,15 +11,11 @@ class QPushButton;
 class Canvas : public QDialog
 {
 public:
-    using Self        = Canvas;
-    using Ptr         = Utils::Ptr<Self>;
-    using Shared      = Utils::SharedPtr<Self>;
-    using ConstPtr    = Utils::Ptr<const Self>;
-    using ConstShared = Utils::SharedPtr<const Self>;
-    
-    Canvas(const NFA&);
+    SMART_ALIASES(Canvas);
     NO_COPY_NO_MOVE(Canvas);
-    
+
+    Canvas(const NFA&);
+
 private:
     QPushButton*         m_closeBtn;
     QPushButton*         m_refreshBtn;

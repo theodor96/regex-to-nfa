@@ -12,14 +12,10 @@ class QPushButton;
 class MainWindow : public QDialog
 {
 public:
-    using Self        = MainWindow;
-    using Ptr         = Utils::Ptr<Self>;
-    using Shared      = Utils::SharedPtr<Self>;
-    using ConstPtr    = Utils::Ptr<const Self>;
-    using ConstShared = Utils::SharedPtr<const Self>;
-    
-    MainWindow();
+    SMART_ALIASES(MainWindow);
     NO_COPY_NO_MOVE(MainWindow);
+
+    MainWindow();
 
 protected:
     void closeEvent(QCloseEvent* event) override;

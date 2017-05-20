@@ -13,18 +13,13 @@ class QPaintEvent;
 class AutomatonWidget : public QWidget
 {
 public:
-    using Self        = AutomatonWidget;
-    using Ptr         = Utils::Ptr<Self>;
-    using Weak        = Utils::WeakPtr<Self>;
-    using Shared      = Utils::SharedPtr<Self>;
-    using ConstPtr    = Utils::Ptr<const Self>;
-    using ConstShared = Utils::SharedPtr<const Self>;
-
-    AutomatonWidget(Canvas* canvas);
+    SMART_ALIASES(AutomatonWidget);
     NO_COPY_NO_MOVE(AutomatonWidget);
 
     using StateList      = std::vector<StateWidget::Shared>;
     using TransitionList = std::vector<TransitionWidget::Shared>;
+
+    AutomatonWidget(Canvas* canvas);
 
     void refresh();
     void addState(StateWidget::Ptr state);

@@ -4,6 +4,15 @@
 #include <memory>
 #include <cmath>
 
+#define SMART_ALIASES(CLASS) \
+    using Self        = CLASS; \
+    using Ptr         = Utils::Ptr<Self>; \
+    using Weak        = Utils::WeakPtr<Self>; \
+    using Shared      = Utils::SharedPtr<Self>; \
+    using ConstPtr    = Utils::Ptr<const Self>; \
+    using ConstWeak   = Utils::WeakPtr<const Self>; \
+    using ConstShared = Utils::SharedPtr<const Self>
+
 #define NO_COPY(CLASS) \
     CLASS(const CLASS&) = delete; \
     CLASS& operator=(const CLASS&) = delete
