@@ -60,6 +60,7 @@ bool MainWindow::isRegexValid()
 
     static QString C_ACCEPTED_CHARACTERS("|()+*.");
 
+    // firstly lets check what characters our regex has
     for (const auto& itr : m_textBox->text())
     {
         if (itr.isLetter())
@@ -78,5 +79,26 @@ bool MainWindow::isRegexValid()
         }
     }
 
-    return true;
+    // now lets validate paranthesis balancing
+    qint16 balance = 0;
+    for (const auto& itr : m_textBox->text())
+    {
+        if (itr == '(')
+        {
+            ++balance;
+        }
+        else if (itr == ')')
+        {
+            if (balance > 0)
+            {
+                --balance;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    return balance == 0;
 }
