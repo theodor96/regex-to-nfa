@@ -68,7 +68,7 @@ void Canvas::setupStates(const NFA::StateList& stateList, NFA::State finalState)
         auto stateWidget = StateWidget::MakePtr(m_automaton.get());
         stateWidget->setGuid(itr + 1);
 
-        if (itr + 1 == finalState)
+        if (itr  == finalState || stateList.size() == 1)
         {
             stateWidget->markAsFinal();
         }
