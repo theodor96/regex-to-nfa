@@ -3,8 +3,6 @@
 #include "StateWidget.h"
 #include "AutomatonWidget.h"
 
-#include <QDebug>
-
 StateWidget::StateWidget(AutomatonWidget* parent) :
     QWidget(parent),
     m_location(),
@@ -41,7 +39,6 @@ void StateWidget::setLocation(const QPoint& location)
 
 void StateWidget::markAsFinal()
 {
-    qDebug() << "state " << m_guid << " has just been marked as final";
     m_isFinal = true;
 }
 

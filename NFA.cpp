@@ -47,16 +47,10 @@ void detail::NFAImpl::display()
     for (std::size_t i = 0; i < transitions.size(); ++i)
     {
         trans new_trans = transitions.at(i);
-        qDebug() << "q"
-                 << new_trans.vertex_from
-                 << " --> q"
-                 << new_trans.vertex_to
-                 << " : Symbol - "
-                 << new_trans.trans_symbol
-                 << "\n";
+        qDebug() << new_trans.vertex_from << " to " << new_trans.vertex_to << " via " << new_trans.trans_symbol << "\n";
     }
 
-    qDebug() <<"\nThe final state is q" << get_final_state() << "\n";
+    qDebug() <<"Initial state: 1\nFinal state: " << get_final_state() << "\n";
 }
 
 detail::NFAImpl detail::concat(NFAImpl a, NFAImpl b)
