@@ -4,13 +4,16 @@
 #include "TransitionWidget.h"
 #include "AutomatonWidget.h"
 
+constexpr TransitionWidget::QtColorStaticArray TransitionWidget::C_POSSIBLE_COLORS;
+
 TransitionWidget::TransitionWidget(AutomatonWidget* parent) :
     QWidget(parent),
     m_automaton(parent),
     m_from(),
     m_to(),
     m_symbol(),
-    m_bezierPoint()
+    m_bezierPoint(),
+    m_color()
 {
 
 }
@@ -61,6 +64,8 @@ void TransitionWidget::paintEvent(QPaintEvent*)
         QPoint rangePoint(25, 25);
         QPoint middlePoint(Utils::getMiddlePointBetween(m_from->getLocation(), m_to->getLocation()));
         m_bezierPoint = QPoint(Utils::getRandomPointBetween(middlePoint - rangePoint, middlePoint + rangePoint));
+
+        m_color = C_POSSIBLE_COLORS[Utils::getRandomBetween(QtColorStaticArray::size_type(0), C_POSSIBLE_COLORS.size() - 1)];
     }
 
     QPainterPath bezierCurve;
@@ -68,14 +73,11 @@ void TransitionWidget::paintEvent(QPaintEvent*)
     bezierCurve.quadTo(m_bezierPoint, m_to->getLocation());
 
     QPen pen;
-    pen.setColor(Qt::green);
+    pen.setColor(m_color);
     pen.setWidth(2);
 
     QPainter painter(this);
     painter.setPen(pen);
     painter.drawPath(bezierCurve);
-
-    pen.setColor(Qt::black);
-    painter.setPen(pen);
     painter.drawText(m_bezierPoint, m_symbol);
 }

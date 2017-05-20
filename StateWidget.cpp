@@ -57,7 +57,7 @@ QSize StateWidget::sizeHint() const
 void StateWidget::paintEvent(QPaintEvent*)
 {
     QPen pen;
-    pen.setColor(Qt::red);
+    pen.setColor(Qt::black);
     pen.setWidth(2);
 
     QPainter painter(this);

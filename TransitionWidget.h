@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QSize>
+#include <array>
 #include "StateWidget.h"
 #include "Utils.h"
 
@@ -42,6 +43,21 @@ private:
     StateWidget::ConstShared m_to;
     Symbol                   m_symbol;
     QPoint                   m_bezierPoint;
+    Qt::GlobalColor          m_color;
+
+    using QtColorStaticArray = std::array<Qt::GlobalColor, 6>;
+
+    static constexpr QtColorStaticArray C_POSSIBLE_COLORS
+    {
+        {
+            Qt::gray,
+            Qt::red,
+            Qt::green,
+            Qt::blue,
+            Qt::magenta,
+            Qt::black
+        }
+    };
 };
 
 #endif // TRANSITIONWIDGET_H
