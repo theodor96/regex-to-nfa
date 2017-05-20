@@ -11,9 +11,9 @@
     using Shared      = Utils::SharedPtr<Self>;                               \
                                                                               \
     template<typename... Args>                                                \
-    static Ptr MakePtr(Args&&... args)                                     \
+    static Ptr MakePtr(Args&&... args)                                        \
     {                                                                         \
-        return Utils::MakePtr<Self, Args...>(std::forward<Args>(args)...); \
+        return Utils::MakePtr<Self, Args...>(std::forward<Args>(args)...);    \
     }                                                                         \
                                                                               \
     template<typename... Args>                                                \

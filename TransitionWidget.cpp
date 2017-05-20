@@ -1,4 +1,5 @@
 #include <QPen>
+#include <QFont>
 #include <QPainter>
 #include <QtMath>
 #include "TransitionWidget.h"
@@ -79,5 +80,10 @@ void TransitionWidget::paintEvent(QPaintEvent*)
     QPainter painter(this);
     painter.setPen(pen);
     painter.drawPath(bezierCurve);
-    painter.drawText(m_bezierPoint, m_symbol);
+
+    QFont font;
+    font.setPixelSize(18);
+
+    painter.setFont(font);
+    painter.drawText(m_bezierPoint, m_symbol == '^' ? QString::fromUtf8("\u03BB") : m_symbol);
 }
