@@ -38,7 +38,7 @@ Canvas::Canvas(const NFA& nfa) :
 
 void Canvas::setupStates(const NFA::StateList& stateList, NFA::State finalState) const
 {
-    QPoint proposedLocation(30, 30);
+    QPoint proposedLocation(40, 30);
 
     // checks if current proposed location would be a good one
     auto isSuitable = [this, &proposedLocation]

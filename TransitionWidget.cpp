@@ -62,11 +62,15 @@ void TransitionWidget::paintEvent(QPaintEvent*)
 {
     if (m_automaton->isUpdateNeeded() || m_bezierPoint.isNull())
     {
+        // for the first paint, also pick a color. then leave it as it was picked
+        if (m_bezierPoint.isNull())
+        {
+            m_color = C_POSSIBLE_COLORS[Utils::getRandomBetween(QtColorStaticArray::size_type(0), C_POSSIBLE_COLORS.size() - 1)];
+        }
+
         QPoint rangePoint(25, 25);
         QPoint middlePoint(Utils::getMiddlePointBetween(m_from->getLocation(), m_to->getLocation()));
         m_bezierPoint = QPoint(Utils::getRandomPointBetween(middlePoint - rangePoint, middlePoint + rangePoint));
-
-        m_color = C_POSSIBLE_COLORS[Utils::getRandomBetween(QtColorStaticArray::size_type(0), C_POSSIBLE_COLORS.size() - 1)];
     }
 
     QPainterPath bezierCurve;

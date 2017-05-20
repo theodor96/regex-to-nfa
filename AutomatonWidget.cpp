@@ -1,3 +1,5 @@
+#include <QPainter>
+#include <QFont>
 #include "AutomatonWidget.h"
 #include "Canvas.h"
 
@@ -8,6 +10,23 @@ AutomatonWidget::AutomatonWidget(Canvas* canvas) :
     m_transitionList()
 {
 
+}
+
+void AutomatonWidget::refresh()
+{
+    m_isUpdateNeeded = true;
+
+    for (const auto& stateItr : m_stateList)
+    {
+        stateItr->repaint();
+    }
+
+    for (const auto& transitionItr : m_transitionList)
+    {
+        transitionItr->repaint();
+    }
+
+    m_isUpdateNeeded = false;
 }
 
 void AutomatonWidget::addState(StateWidget::Ptr state)
@@ -44,19 +63,12 @@ QSize AutomatonWidget::sizeHint() const
     };
 }
 
-void AutomatonWidget::refresh()
+void AutomatonWidget::paintEvent(QPaintEvent*)
 {
-    m_isUpdateNeeded = true;
+    QFont font;
+    font.setPixelSize(25);
 
-    for (const auto& stateItr : m_stateList)
-    {
-        stateItr->repaint();
-    }
-
-    for (const auto& transitionItr : m_transitionList)
-    {
-        transitionItr->repaint();
-    }
-
-    m_isUpdateNeeded = false;
+    QPainter painter(this);
+    painter.setFont(font);
+    painter.drawText(8, 33, QString::fromUtf8("\u2192"));
 }

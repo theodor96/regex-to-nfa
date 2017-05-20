@@ -31,6 +31,9 @@ public:
 
     QSize sizeHint() const override;
 
+protected:
+    void paintEvent(QPaintEvent* event) override;
+
 private:
     bool           m_isUpdateNeeded;
     StateList      m_stateList;
