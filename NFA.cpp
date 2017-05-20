@@ -236,7 +236,29 @@ NFA::State NFA::getFinalState() const
 
 NFA NFA::FromRegex(const std::string& regex)
 {
-    auto nfaImpl = detail::re_to_nfa(regex);
+    std::string preparedRegex;
+    for (auto itr : regex)
+    {
+        if (!preparedRegex.empty())
+        {
+            const char& c = preparedRegex.back();
+            if (c != '(' && c != '|' && itr != ')' && itr != '|' && itr != '*')
+            {
+                preparedRegex += ".";
+            }
+
+            preparedRegex += itr;
+        }
+        else
+        {
+            preparedRegex += itr;
+        }
+    }
+
+    preparedRegex = "(" + preparedRegex + ")";
+    qDebug() << "PREPARED REGEX: " << QString::fromStdString(preparedRegex);
+
+    auto nfaImpl = detail::re_to_nfa(preparedRegex);
     nfaImpl.display();
     auto nfa = static_cast<NFA*>(&nfaImpl);
     return *nfa;
