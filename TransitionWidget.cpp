@@ -53,8 +53,8 @@ QSize TransitionWidget::sizeHint() const
 {
     return
     {
-        530,
-        530
+        1450,
+        800
     };
 }
 
@@ -68,7 +68,7 @@ void TransitionWidget::paintEvent(QPaintEvent*)
             m_color = C_POSSIBLE_COLORS[Utils::getRandomBetween(QtColorStaticArray::size_type(0), C_POSSIBLE_COLORS.size() - 1)];
         }
 
-        QPoint rangePoint(25, 25);
+        QPoint rangePoint(40, 40);
         QPoint middlePoint(Utils::getMiddlePointBetween(m_from->getLocation(), m_to->getLocation()));
         m_bezierPoint = QPoint(Utils::getRandomPointBetween(middlePoint - rangePoint, middlePoint + rangePoint));
     }

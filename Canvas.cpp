@@ -11,16 +11,17 @@ Canvas::Canvas(const NFA& nfa) :
 {
     // setup the canvas
     this->setWindowTitle("NFA Computation Result");
-    this->setFixedSize(550, 580);
     this->setWindowFlags(this->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    //this->showFullScreen();
+    this->setFixedSize(1430, 850);
     
     // setup the close button
     m_closeBtn->setText("Close");
-    m_closeBtn->move(460, 540);
+    m_closeBtn->move(1340, 810);
 
     // setup the refresh button
     m_refreshBtn->setText("Refresh");
-    m_refreshBtn->move(360, 540);
+    m_refreshBtn->move(1240, 810);
 
     // close the canvas on close button push
     this->connect(m_closeBtn, &QPushButton::clicked, this, &QWidget::close);
@@ -45,7 +46,7 @@ void Canvas::setupStates(const NFA::StateList& stateList, NFA::State finalState)
     {
         for (const auto& state :  m_automaton->getStateList())
         {
-            if (Utils::DistanceBetweenPoints(state->getLocation(), proposedLocation) < 70)
+            if (Utils::DistanceBetweenPoints(state->getLocation(), proposedLocation) < 120)
             {
                 return false;
             }
@@ -57,8 +58,8 @@ void Canvas::setupStates(const NFA::StateList& stateList, NFA::State finalState)
     // proposes a new location for a state
     auto findNew = [&proposedLocation]
     {
-        proposedLocation = QPoint(Utils::getRandomBetween(40, 480),
-                                  Utils::getRandomBetween(40, 480));
+        proposedLocation = QPoint(Utils::getRandomBetween(40, 1390),
+                                  Utils::getRandomBetween(40, 790));
     };
 
     // iterate through the list of states and create widgets for them

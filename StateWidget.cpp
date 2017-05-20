@@ -46,8 +46,8 @@ QSize StateWidget::sizeHint() const
 {
     return
     {
-        530,
-        530
+        1450,
+        800
     };
 }
 
